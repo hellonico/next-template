@@ -19,6 +19,7 @@
                  [environ "1.0.0"]
                  [fogus/ring-edn "0.3.0"]
                  [cljs-ajax "0.3.14"]
+                 [shodan "0.4.2" :scope "test"]
                  [org.clojure/clojurescript "1.7.107" :scope "provided"]
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]
                  [secretary "1.2.3"]{{{app-dependencies}}}]
