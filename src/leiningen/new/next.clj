@@ -63,6 +63,8 @@
               ["project.clj" (render "project.clj" data)]
               "src/cljc/{{sanitized}}"
               ["resources/public/css/site.css" (render "resources/public/css/site.css" data)]
+              ["resources/public/css/skeleton.css" (render "resources/public/css/skeleton.css" data)]
+              ["resources/public/css/normalize.css" (render "resources/public/css/normalize.css" data)]
               ["src/clj/{{sanitized}}/handler.clj" (render "src/clj/next/handler.clj" data)]
               ["src/clj/{{sanitized}}/server.clj" (render "src/clj/next/server.clj" data)]
               ["env/dev/clj/{{sanitized}}/repl.clj" (render "env/dev/clj/next/repl.clj" data)]

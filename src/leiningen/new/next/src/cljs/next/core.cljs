@@ -1,51 +1,52 @@
 (ns {{project-ns}}.core
-    (:require [reagent.core :as reagent :refer [atom]]
-              [reagent.session :as session]
-              [secretary.core :as secretary :include-macros true]
-              [goog.events :as events]
-              [goog.history.EventType :as EventType])
-    (:import goog.History))
+  (:require [compojure.core :refer [GET defroutes]]
+          [compojure.route :refer [not-found resources]]
+          [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
+          [hiccup.core :refer [html]]
+          [hiccup.page :refer [include-js include-css]]
+          [prone.middleware :refer [wrap-exceptions]]
+          [ring.middleware.reload :refer [wrap-reload]]
+          [environ.core :refer [env]]))
 
-;; -------------------------
-;; Views
+(def home-page
+(html
+ [:html
 
-(defn home-page []
-  [:div [:h2 "Welcome to {{name}}"]
-   [:div [:a {:href "#/about"} "go to about page"]]])
+  [:head
+   [:meta {:charset "utf-8"}]
+   [:meta {:name "viewport"
+           :content "width=device-width, initial-scale=1"}]
+  [:link {:href "//fonts.googleapis.com/css?family=Raleway:400,300,600" :rel "stylesheet" :type "text/css"}]
+   (include-css "css/skeleton.css")
+   (include-css "css/normalize.css")
+   (include-css (if (env :dev) "css/site.css" "css/site.min.css"))
+   ]
 
-(defn about-page []
-  [:div [:h2 "About {{name}}"]
-   [:div [:a {:href "#/"} "go to the home page"]]])
+  [:body
 
-(defn current-page []
-  [:div [(session/get :current-page)]])
+  [:div.container
 
-;; -------------------------
-;; Routes
-(secretary/set-config! :prefix "#")
+  [:div.row
+  [:div {:class "one-half column" :style "margin-top: 25%"}
+    [:h4 "Super Hello"]
+    [:p "This page is a ultra simple page"]]]
 
-(secretary/defroute "/" []
-  (session/put! :current-page #'home-page))
+    [:div.row
+   [:div#app
+    ; [:h3 "ClojureScript has not been compiled!"]
+    ; [:p "please run "
+    ;  [:b "lein figwheel"]
+    ;  " in order to start the compiler"]
+     ]
+   (include-js "js/app.js")]
 
-(secretary/defroute "/about" []
-  (session/put! :current-page #'about-page))
+   ]]]))
 
-;; -------------------------
-;; History
-;; must be called after routes have been defined
-(defn hook-browser-navigation! []
-  (doto (History.)
-    (events/listen
-     EventType/NAVIGATE
-     (fn [event]
-       (secretary/dispatch! (.-token event))))
-    (.setEnabled true)))
+(defroutes routes
+(GET "/" [] home-page)
+(resources "/")
+(not-found "Not Found"))
 
-;; -------------------------
-;; Initialize app
-(defn mount-root []
-  (reagent/render [current-page] (.getElementById js/document "app")))
-
-(defn init! []
-  (hook-browser-navigation!)
-  (mount-root))
+(def app
+(let [handler (wrap-defaults #'routes site-defaults)]
+  (if (env :dev) (-> handler wrap-exceptions wrap-reload) handler)))
