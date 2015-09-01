@@ -4,7 +4,8 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
-  :dependencies [[org.clojure/clojure "1.7.0"]
+  :dependencies [
+                 [org.clojure/clojure "1.7.0"]
                  [ring-server "0.4.0"]
                  [cljsjs/react "0.13.3-1"]
                  [reagent "0.5.1-rc"]
@@ -16,10 +17,15 @@
                  [compojure "1.4.0"]
                  [hiccup "1.0.5"]
                  [environ "1.0.0"]
+                 [fogus/ring-edn "0.3.0"]
+                 [cljs-ajax "0.3.14"]
                  [org.clojure/clojurescript "1.7.107" :scope "provided"]
+                 [org.clojure/core.async "0.1.346.0-17112a-alpha"]
                  [secretary "1.2.3"]{{{app-dependencies}}}]
 
   :plugins [[lein-environ "1.0.0"]
+            [lein-garden "0.2.6"]
+            [lein-ring "0.9.6"]
             [lein-asset-minifier "0.2.2"]]
 
   :ring {:handler {{project-ns}}.handler/app
@@ -50,17 +56,27 @@
   :less {:source-paths ["src/less"]
          :target-path "resources/public/css"}{{/less-hook?}}
 
+
+     :garden {:builds [{
+         :id "screen"
+         :source-paths ["src/styles"]
+         :stylesheet styles/screen
+         :compiler {
+                    :output-to "resources/public/css/site.css"
+                    :pretty-print? true}}]}
+
   :profiles {:dev {:repl-options {:init-ns {{project-ns}}.repl}
 
                    :dependencies [[ring/ring-mock "0.2.0"]
                                   [ring/ring-devel "1.4.0"]
-                                  [lein-figwheel "0.3.7"]
+                                  [lein-figwheel "0.3.8"]
                                   [org.clojure/tools.nrepl "0.2.10"]
                                   [pjstadig/humane-test-output "0.7.0"]{{{dev-dependencies}}}]
 
                    :source-paths ["env/dev/clj"]
-                   :plugins [[lein-figwheel "0.3.7"]
-                             [lein-cljsbuild "1.0.6"]{{{project-dev-plugins}}}]
+                   :plugins [[lein-figwheel "0.3.8"]
+                             [lein-cljsbuild "1.1.0"]
+                             {{{project-dev-plugins}}}]
 
                    :injections [(require 'pjstadig.humane-test-output)
                                 (pjstadig.humane-test-output/activate!)]

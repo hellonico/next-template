@@ -1,4 +1,4 @@
-# reagent-template
+# next-template
 
 A [Leiningen](http://leiningen.org/) template for projects using Reagent.
 
@@ -137,14 +137,14 @@ The template packages everything you need to create a production ready ClojureSc
 * [Prone](https://github.com/magnars/prone) - better exception reporting middleware for Ring
 * [Heroku](https://www.heroku.com/) - the template is setup to work on Heroku out of the box, simply run `git push heroku master`
 * [clojurescript.test](https://github.com/cemerick/clojurescript.test) - a maximal port of clojure.test to ClojureScript
- 
+
 ## Options
 
 The template supports the following options:
 
 * `+test` - ClojureScript testing support
 * `+less` - use [less](https://github.com/montoux/lein-less) for compiling Less CSS files
- 
+
 ## Contributing & Customizing
 
 Take a look at the open issues, especially ones marked as `help wanted`. If you see one you'd like to address don't hesitate to start a discussion or submit a pull request.
@@ -166,9 +166,6 @@ If you feel that your customizations are general enough to be useful for others 
 
 ## License
 
-Copyright © 2015 Dmitri Sotnikov 
+Copyright © 2015 Dmitri Sotnikov
 
 Distributed under the The MIT License (MIT).
-
-
-
