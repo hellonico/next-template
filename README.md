@@ -18,13 +18,13 @@ For any questions or discussion please come join us at the [Reagent Google Group
 Create a new application project:
 
 ```
-lein new reagent <name>
+lein new next <name>
 ```
 
 To enable [clojurescript testing](https://github.com/cemerick/clojurescript.test) with [PhantomJS](http://phantomjs.org/), use `+test` flag:
 
 ```
-lein new reagent <name> +test
+lein new next <name> +test
 ```
 To run the tests, please use `lein cljsbuild test`. For installation instructions of PhantomJS, please see [this](http://phantomjs.org/download.html).
 
